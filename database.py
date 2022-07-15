@@ -55,4 +55,11 @@ class interface:
         # need to now iter through dtb to find songID. Need tuple format for this
         pass
 
-
+    def backend_database_creation(self):
+        song_data_add = {}
+        for i in range(int(input("How many songs to add to the database?: "))):
+            name = input("Enter the name of the song: ")
+            artist = input("Enter the name of the artist: ")
+            # get samples and fingerprints here
+            peak_data = None  # add peak func here
+            song_data_add[peak_data] = [("data here",), (name, artist)]
