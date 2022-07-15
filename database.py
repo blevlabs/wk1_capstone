@@ -56,11 +56,11 @@ class interface:
                 In format of
                     [peak_1, peak_2, peak_3... peak_n] where
 
-                        peak_1 = [[(freq_1, freq_m+1, time_diff_1), time]
+                        peak_1 =[[(freq_1, freq_m+1, time_diff_1), time]
                                 [(freq_1, freq_m+2, time_diff_2), time]
                                 :
                                 [(freq_1, freq_m+neighbors, time_diff_neighbors), time]]
-                        peak_2 = [[(freq_2, freq_m+1, time_diff_1), time]
+                        peak_2 =[[(freq_2, freq_m+1, time_diff_1), time]
                                 [(freq_2, freq_m+2, time_diff_2), time]
                                 :
                                 [(freq_1, freq_m+neighbors, time_diff_neighbors), time]]
