@@ -1,5 +1,5 @@
 import pickle
-import microphone
+from microphone import record_audio
 import numpy as np
 from librosa import load
 
@@ -7,12 +7,15 @@ from typing import Dict, Callable, Optional, List, Tuple, Any, Union
 
 
 class interface:
-    '''
+    """
     This class is used to store the fingerprints of the songs in the database, and do operations to this database
     user_audio_input: function to take in audio from the user, and return the samples/sample_rate of the audio
     fingerprint_to_dict: function to convert the fingerprint of the audio into a dictionary
     find_match: function to find the best match of the audio from the user
-    '''
+    """
+
+    def __init__(self, database_directory=""):
+        self.dtb_dir = database_directory
 
     def user_audio_input(self, audio_directory="", time=0, dir=False, mic=False):
         """
@@ -32,15 +35,15 @@ class interface:
         """
         This function is used to save the database to a file
         """
-        with open(directory, 'wb') as f:
+        with open(self.dtb_dir, 'wb') as f:
             pickle.dump(dict, f)
         return
 
-    def database_load(self, directory=""):
+    def database_load(self):
         """
         This function is used to load the database from a file
         """
-        with open(directory, 'rb') as f:
+        with open(self.dtb_dir, 'rb') as f:
             return pickle.load(f)
 
     def fingerprint_to_dict(self, fingerprint, song_ID: int) -> Dict[tuple, list]:
@@ -107,8 +110,8 @@ class interface:
                               [(6, 3, 7), 13],
                               [(6, 89, 7), 89]]]
 
-        fingerprint_mp3_0 = fingerprint_to_dict(fingerprint_mp3_0, 0)
-        fingerprint_mp3_1 = fingerprint_to_dict(fingerprint_mp3_1, 1)
+        fingerprint_mp3_0 = self.fingerprint_to_dict(fingerprint_mp3_0, 0)
+        fingerprint_mp3_1 = self.fingerprint_to_dict(fingerprint_mp3_1, 1)
 
         data = [fingerprint_mp3_0, fingerprint_mp3_1]  # write code for querying database instead of using dummy data.
         # print(fingerprint)
