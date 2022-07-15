@@ -51,14 +51,8 @@ class interface:
         with open(self.dtb_dir, 'rb') as f:
             return pickle.load(f)
 
-    def song_deletion(self, songID):
-        # need to now iter through dtb to find songID. Need tuple format for this
-        """
-        (pk1,pk2,dt) -> [(songID,t)...]
-        """
-        for k,v in dtb.items()
-            if songID in v
-        pass
+    def song_inspection(self):
+        songIDS = dtb.values()
 
     def backend_database_creation(self):
         """
