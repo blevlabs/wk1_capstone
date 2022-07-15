@@ -19,10 +19,12 @@ class interface:
         Initialize the database directory
         """
         self.dtb_dir = database_directory
+        self.dtb = self.database_load()
 
-    def user_audio_input(self, audio_directory="", time=0, dir=False, mic=False):
+    def user_audio_input(self, audio_directory="", time=0, dir=False):
         """
-        Creating functions for converting all variety of audio recordings, be them recorded from the microphone or digital audio files, into a NumPy-array of digital samples
+        Creating functions for converting all variety of audio recordings,
+        be them recorded from the microphone or digital audio files, into a NumPy-array of digital samples
         """
         if dir:
             assert audio_directory != "", "Please enter a valid image directory"
@@ -48,6 +50,7 @@ class interface:
         """
         with open(self.dtb_dir, 'rb') as f:
             return pickle.load(f)
+
 
     def fingerprint_to_dict(self, fingerprint, song_ID: int) -> Dict[tuple, list]:
         """
@@ -83,57 +86,20 @@ class interface:
                     dictionary[peak_diff[0]].append((song_ID, peak_diff[1]))
         return dictionary
 
-    def find_match(self, fingerprint, min_threshold: int = 1) -> Union[int, None]:
+    def song_inspection(self):
+        songIDS = dtb.values()
+
+
+    def backend_database_creation(self):
         """
-        Parameters:
-            - fingerprint of audio recorded by a mic
-            - min_threshold: most likely song must have at least min_threshold number of matches
-        Output:
-            - song_ID of top match if above min_threshold
-            - else: output None
+        This function handles the general use database creation for the program.
         """
-        fingerprint_mp3_0 = [[[(1, 2, 0.1), 10],  # let neighbors = 2, num_peaks = 3
-                              [(1, 3, 5), 40]],
-
-                             [[(2, 3, 7), 20],
-                              [(2, 3, 7), 13]],
-
-                             [[(3, 5, 4), 19],
-                              [(3, 3, 7), 13]]]
-
-        fingerprint_mp3_1 = [[[(1, 2, 0.1), 10],  # let neighbors = 3, num_peaks = 3
-                              [(1, 3, 5), 40],
-                              [(1, 9, 1), 30]],
-
-                             [[(4, 6, 7), 234],
-                              [(4, 8, 7), 84],
-                              [(4, 3, 7), 3]],
-
-                             [[(6, 5, 4), 19],
-                              [(6, 3, 7), 13],
-                              [(6, 89, 7), 89]]]
-
-        fingerprint_mp3_0 = self.fingerprint_to_dict(fingerprint_mp3_0, 0)
-        fingerprint_mp3_1 = self.fingerprint_to_dict(fingerprint_mp3_1, 1)
-
-        data = [fingerprint_mp3_0, fingerprint_mp3_1]  # write code for querying database instead of using dummy data.
-        # print(fingerprint)
-        matches = []  # stores [(song_ID, t_song - t_clip), (song_ID, t_song - t_clip), ...]
-        for key1 in fingerprint:
-            for song_fingerprint in data:  # song_fingerprint is a dictionary
-                for key2 in song_fingerprint:
-                    if key1 == key2:
-                        for match in song_fingerprint[key2]:
-                            for instance in fingerprint[key1]:
-                                # print("instance", instance)
-                                t_offset = match[1] - instance[1]
-                                # print("t_offset", t_offset)
-                                matches.append((match[0], t_offset))
-        # Below: Tallying up matches to see what is the best match
-        from collections import Counter
-        tally = Counter(matches)
-        print("You can comment this out in the find_matches func: ", tally)
-        top_match = tally.most_common(1)[0]  # find most common match
-        if top_match[1] > min_threshold:
-            return top_match[0][0]  # get song_ID from tuple within tuple
-        return None
+        song_data_add = {}
+        for i in range(int(input("How many songs to add to the database?: "))):
+            name = input("Enter the name of the song: ")
+            artist = input("Enter the name of the artist: ")
+            localpath = input("Local Path of the File: ")
+            samples, sampling_rate = self.user_audio_input(audio_directory=localpath, dir=True)
+            peak_data = None  # add peak func here, use samples and sampling rate for peak and fingerprint data
+            fingerprint = None  # use samples and sampling rate for peak and fingerprint data
+            song_data_add[peak_data] = [(fingerprint), (name, artist)]
