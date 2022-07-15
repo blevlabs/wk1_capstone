@@ -53,13 +53,23 @@ class interface:
 
     def song_deletion(self, songID):
         # need to now iter through dtb to find songID. Need tuple format for this
+        """
+        (pk1,pk2,dt) -> [(songID,t)...]
+        """
+        for k,v in dtb.items()
+            if songID in v
         pass
 
     def backend_database_creation(self):
+        """
+        This function handles the general use database creation for the program.
+        """
         song_data_add = {}
         for i in range(int(input("How many songs to add to the database?: "))):
             name = input("Enter the name of the song: ")
             artist = input("Enter the name of the artist: ")
-            # get samples and fingerprints here
-            peak_data = None  # add peak func here
-            song_data_add[peak_data] = [("data here",), (name, artist)]
+            localpath = input("Local Path of the File: ")
+            samples, sampling_rate = self.user_audio_input(audio_directory=localpath, dir=True)
+            peak_data = None  # add peak func here, use samples and sampling rate for peak and fingerprint data
+            fingerprint = None  # use samples and sampling rate for peak and fingerprint data
+            song_data_add[peak_data] = [(fingerprint), (name, artist)]
