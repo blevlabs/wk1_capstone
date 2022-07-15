@@ -1,5 +1,5 @@
 import numpy as np
-import random
+
 
 
 def clip_producer(audio_samp: np.ndarray, l: int):
@@ -17,12 +17,13 @@ def clip_producer(audio_samp: np.ndarray, l: int):
     
     Returns
     -------
-    rand_clip : numpy.ndarray
-        random portion of audio_samp array of shape((44100 * l),)
+    split_data : list[numpy.ndarray]
+        list of arrays with each element containing a clip of the original audio
     """
     data = audio_samp
     split_amt = data.shape[0] // (44100 * l)
     split_data = np.array_split(data, split_amt)
-    rand_clip = random.choice(split_data)
+    
 
-    return rand_clip
+
+    return split_data
