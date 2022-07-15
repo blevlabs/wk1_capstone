@@ -35,14 +35,14 @@ def fingerprint_to_dict(fingerprint, song_ID: int) -> Dict[tuple, list]:
     return dictionary
 
 def find_match(fingerprint, min_threshold: int=1) -> Union[int, None]:
-    """
+    '''
     Parameters: 
         - fingerprint of audio recorded by a mic
         - min_threshold: most likely song must have at least min_threshold number of matches
     Output: 
         - song_ID of top match if above min_threshold
         - else: output None
-    """
+    '''
     fingerprint_mp3_0 = [[[(1, 2, 0.1), 10], # let neighbors = 2, num_peaks = 3
                           [(1, 3, 5), 40]], 
 
