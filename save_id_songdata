@@ -9,6 +9,8 @@ def save_id_song_data(song_name: str, artist: str):
     Return:
         id: int
             Generated number to associate with the artist and and song
+    
+    Updates the dictionary with a generated ID, matched with song_name and artist
     """
     dict = "dictionary of already saved ids"
     id = len(dict)
