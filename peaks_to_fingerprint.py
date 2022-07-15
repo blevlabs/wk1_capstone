@@ -14,7 +14,7 @@ def peaks_to_fingerprint(peaks: np.ndarray, neighbors: int):
                     peak_1map = [[(freq_1, freq_m+1, time_diff_1), time],
                                 [(freq_1, freq_m+2, time_diff_2), time],
                                 :
-                                [(freq_1, freq_m+neighbors, time_diff_neighbors), time]],
+                                [(freq_1, freq_m+neighbors, time_diff_neighbors), time]]
                     peak_2map = [[(freq_2, freq_m+1, time_diff_1), time],
                                 [(freq_2, freq_m+2, time_diff_2), time],
                                 :
