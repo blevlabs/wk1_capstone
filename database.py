@@ -19,10 +19,12 @@ class interface:
         Initialize the database directory
         """
         self.dtb_dir = database_directory
+        self.dtb = self.database_load()
 
-    def user_audio_input(self, audio_directory="", time=0, dir=False, mic=False):
+    def user_audio_input(self, audio_directory="", time=0, dir=False):
         """
-        Creating functions for converting all variety of audio recordings, be them recorded from the microphone or digital audio files, into a NumPy-array of digital samples
+        Creating functions for converting all variety of audio recordings,
+        be them recorded from the microphone or digital audio files, into a NumPy-array of digital samples
         """
         if dir:
             assert audio_directory != "", "Please enter a valid image directory"
@@ -83,6 +85,10 @@ class interface:
                     dictionary[peak_diff[0]].append((song_ID, peak_diff[1]))
         return dictionary
 
+    def song_deletion(self, songID):
+        # need to now iter through dtb to find songID. Need tuple format for this
+        pass
+
     def find_match(self, fingerprint, min_threshold: int = 1) -> Union[int, None]:
         """
         Parameters:
@@ -92,6 +98,7 @@ class interface:
             - song_ID of top match if above min_threshold
             - else: output None
         """
+
         fingerprint_mp3_0 = [[[(1, 2, 0.1), 10],  # let neighbors = 2, num_peaks = 3
                               [(1, 3, 5), 40]],
 
