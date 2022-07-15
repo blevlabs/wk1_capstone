@@ -15,6 +15,9 @@ class interface:
     """
 
     def __init__(self, database_directory=""):
+        """
+        Initialize the database directory
+        """
         self.dtb_dir = database_directory
 
     def user_audio_input(self, audio_directory="", time=0, dir=False, mic=False):
