@@ -216,11 +216,11 @@ class Interface:
         dict = self.ids_and_songdata
         id = random.randint(0, 10000)
         dict[id] = (song_name, artist)
-        with open("songIDs.pkl", "rb") as f:
+        with open("data/datasets/songIDs.pkl", "rb") as f:
             dtb = pickle.load(f)
             f.close()
         dtb.update(dict)
-        with open("songIDs.pkl", "wb") as f:
+        with open("data/datasets/songIDs.pkl", "wb") as f:
             pickle.dump(dtb, f)
             f.close()
         return id
@@ -267,24 +267,18 @@ class Interface:
             name = file.replace(".mp3", "")
             artist = songs[name]
             localpath = directory + file
-            fingerprint = self.song_to_fingerprint(name, artist, localpath)  # TODO: Optimize this funciton
+            fingerprint = self.song_to_fingerprint(localpath)  # TODO: Optimize this function
             print("saving id to songdata")
-            song_id = self.save_id_song_data(song_name=name, artist=artist)  # TODO: Optimize this funciton
+            song_id = self.save_id_song_data(song_name=name, artist=artist)  # TODO: Optimize this function
             print("adding fingerprints to database")
-            self.add_fingerprints_to_database(fingerprint, song_id)  # TODO: Optimize this funciton
+            self.add_fingerprints_to_database(fingerprint, song_id)  # TODO: Optimize this function
 
     def song_to_fingerprint(self, localpath):
         samples, sample_rate = self.user_audio_input(audio_directory=localpath, dir=True)
         sample_amps = samples_to_spectrogram(samples, sample_rate)
-        # print("finding min amps")
-
         min_amps = min_amplitudes(sample_amps)
-        # print("finding peaks in spectrogram")
         local_peaks = local_peak_locations(sample_amps, local_neighborhoods(), min_amps)
-        # print("local peaks", local_peaks)
-        # print("finding fingerprints")
-        fingerprint = self.peaks_to_fingerprint(local_peaks,
-                                                15)  # use samples and sampling rate for peak and fingerprint data
+        fingerprint = self.peaks_to_fingerprint(local_peaks,15)  # use samples and sampling rate for peak and fingerprint data
         return fingerprint
 
     def peaks_to_fingerprint(self, peaks: np.ndarray, neighbors: int = 15):
@@ -373,9 +367,14 @@ class Interface:
         return None
 
 
-class userdata(Interface, clipmanager, pkl_manager, spectrogram_analysis, match_logic):
+class CogZam(Interface, clipmanager, pkl_manager, spectrogram_analysis, match_logic):
     def create_user_database(self, directory):
+        self.dtb = Interface()
+        self.dtb.automatic_database_generation(directory)
         pass
 
     def audio_analysis(self, file_directory):
-        pass
+        fingerprint = self.dtb.song_to_fingerprint(file_directory)
+        song_ID = self.dtb.find_match(fingerprint)
+        song_name, artist = self.dtb.songID_to_name([song_ID])[0]
+        return (song_name, artist)
