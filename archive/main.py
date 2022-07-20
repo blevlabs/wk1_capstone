@@ -16,11 +16,11 @@ dtb = Interface(database_directory=database_directory)
 testing = False
 if testing:
     song_n = input("Enter song file name:")
-    mic_path = "userinputs/" + song_n
+    mic_path = "testfiles/" + song_n
     samples, sample_rate = dtb.user_audio_input(audio_directory=mic_path, dir=True)
     # samples = clip_producer(samples, 10) # 10 second long clip # fix later
 elif not testing:
-    directory = "userinputs"
+    directory = "testfiles"
     for noise_clip in os.listdir(directory):
         print("listening to " + noise_clip)
         # samples, sample_rate = dtb.user_audio_input(audio_directory=mic_path, dir=True)
