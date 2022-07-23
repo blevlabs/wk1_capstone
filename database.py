@@ -267,11 +267,11 @@ class Interface:
             name = file.replace(".mp3", "")
             artist = songs[name]
             localpath = directory + file
-            fingerprint = self.song_to_fingerprint(localpath)  # TODO: Optimize this function
+            fingerprint = self.song_to_fingerprint(localpath)
             print("saving id to songdata")
-            song_id = self.save_id_song_data(song_name=name, artist=artist)  # TODO: Optimize this function
+            song_id = self.save_id_song_data(song_name=name, artist=artist)
             print("adding fingerprints to database")
-            self.add_fingerprints_to_database(fingerprint, song_id)  # TODO: Optimize this function
+            self.add_fingerprints_to_database(fingerprint, song_id)
 
     def song_to_fingerprint(self, localpath):
         samples, sample_rate = self.user_audio_input(audio_directory=localpath, dir=True)
